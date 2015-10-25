@@ -686,7 +686,8 @@ typedef enum
 } fsSearchType_t;
 
 void FS_DPrintf(const char *format, ...);
-int FS_FOpenFile(const char *name, fileHandle_t *f, fsMode_t mode);
+int FS_FOpenFile(const char *name, fileHandle_t *f, qboolean gamedir_only);
+int FS_FOpenFileInPath(const char *name, fileHandle_t *f, fsMode_t mode, const char *pathHas);
 void FS_FCloseFile(fileHandle_t f);
 int FS_Read(void *buffer, int size, fileHandle_t f);
 int FS_FRead(void *buffer, int size, int count, fileHandle_t f);
