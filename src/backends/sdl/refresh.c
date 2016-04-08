@@ -563,6 +563,12 @@ GLimp_InitGraphics(qboolean fullscreen)
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
 
+	if ((int)Cvar_VariableValue("cl_stereo") == 1){
+		SDL_GL_SetAttribute(SDL_GL_STEREO, 1);
+	} else {
+		SDL_GL_SetAttribute(SDL_GL_STEREO, 0);
+	}
+
 	if (gl_msaa_samples->value)
 	{
 		msaa_samples = gl_msaa_samples->value;
@@ -617,6 +623,11 @@ GLimp_InitGraphics(qboolean fullscreen)
 				Cvar_SetValue("gl_msaa_samples", 0);
 				SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 0);
 				SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 0);
+			}
+			else if ((int)Cvar_VariableValue("cl_stereo") == 1) {
+				VID_Printf(PRINT_ALL, "SDL SetVideoMode failed: %s\n", SDL_GetError());
+				Cvar_SetValue("cl_stereo", 0);
+				SDL_GL_SetAttribute(SDL_GL_STEREO, 0);
 			}
 			else if (vid.width != 640 || vid.height != 480 || (flags & SDL_FULLSCREEN))
 			{

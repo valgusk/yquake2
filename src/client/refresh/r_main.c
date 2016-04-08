@@ -1610,6 +1610,24 @@ R_BeginFrame(float camera_separation)
 				glDrawBuffer(GL_BACK);
 			}
 		}
+
+		VID_Printf(PRINT_ALL, "stereo mode is %i :/", gl_state.stereo_mode);
+	}
+
+
+	if (gl_state.stereo_mode == STEREO_MODE_OPENGL) {
+		GLuint err = GL_NO_ERROR;
+
+		if ( camera_separation < 0 )
+		{
+			glDrawBuffer( GL_BACK_LEFT );
+			err = glGetError();
+		}
+		else if ( camera_separation > 0  )
+		{
+			glDrawBuffer( GL_BACK_RIGHT );
+			err = glGetError();
+		}
 	}
 
 	/* texturemode stuff */
